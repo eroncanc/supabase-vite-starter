@@ -37,10 +37,16 @@ export const copy = {
 
   errors: {
     loadProjects: 'Could not load your projects.',
+    loadProject: 'Could not load this project.',
     saveProject: 'Could not save the project.',
     deleteProject: 'Could not delete the project.',
     signedOut: 'You must be signed in to do that.',
     sendLink: 'Could not send the link.',
     reachGoogle: 'Could not reach Google.',
+    notAnImage: 'That file doesn’t look like an image.',
+    readImage: 'Could not read the image on this device.',
+    processImage: 'Could not process that image.',
+    uploadImage: 'Could not upload that photo.',
+    signedOutUpload: 'You need to be signed in to upload a photo.',
   },
 }

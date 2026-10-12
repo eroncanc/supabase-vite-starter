@@ -11,6 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { ImagePicker } from '@/components/image-picker'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
@@ -73,6 +74,7 @@ function ProjectForm({
 }) {
   const [name, setName] = useState(project?.name ?? '')
   const [description, setDescription] = useState(project?.description ?? '')
+  const [imagePath, setImagePath] = useState(project?.image_path ?? null)
   const [pending, setPending] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -84,6 +86,7 @@ function ProjectForm({
       await onSubmit({
         name: name.trim(),
         description: description.trim() || null,
+        image_path: imagePath,
       })
       onDone()
     } catch (cause) {
@@ -116,6 +119,12 @@ function ProjectForm({
             onChange={(event) => setDescription(event.target.value)}
           />
         </div>
+        <ImagePicker
+          value={imagePath}
+          onChange={setImagePath}
+          label="Cover"
+          inputId="project-image"
+        />
         {error ? (
           <p className="text-sm text-destructive" role="alert">
             {error}

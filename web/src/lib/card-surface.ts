@@ -27,27 +27,12 @@ export const CARD_SURFACE =
 
 /**
  * The invisible button laid over a card whose target is a dialog rather than a
- * route -- the stats box, the character's banner, a move row. `CardLink` is the
- * anchor version of the same idea, and gets its pointer for free; a button's
- * cursor is the default arrow under Tailwind's preflight, so it has to say so.
+ * route. `CardLink` is the anchor version of the same idea, and gets its
+ * pointer for free; a button's cursor is the default arrow under Tailwind's
+ * preflight, so it has to say so.
  *
  * The ring is drawn inset because the button *is* the card's area: a ring on
  * the outside would sit on top of whatever is next to it.
  */
 export const CARD_SURFACE_OVERLAY =
   'absolute inset-0 cursor-pointer outline-none focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-ring/50'
-
-/**
- * The empty half of a progress bar.
- *
- * Deliberately **not** `bg-muted`, which is what CARD_SURFACE tints a card to
- * on hover: an HP bar sitting on a hovered card was drawing its track in
- * exactly the colour behind it, so an empty bar disappeared and a half-full one
- * lost its right-hand side. A translucent tint of the foreground can't collide
- * with anything, because it's a step away from whatever it's drawn on --
- * `bg-card`, the hover, or the board's bare background. Same reasoning as the
- * `ring-foreground/10` a Card already carries.
- *
- * The height is the caller's: an experience bar is thinner than a health one.
- */
-export const METER_TRACK = 'w-full overflow-hidden rounded-full bg-foreground/10'

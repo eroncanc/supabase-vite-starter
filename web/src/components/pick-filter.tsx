@@ -6,9 +6,8 @@ import { Input } from '@/components/ui/input'
 /**
  * The search box above a pick list.
  *
- * Shared by the cast picker, the battle's participant picker and the moveset
- * picker for the same reason CharacterPickRow is: narrowing a list down is one
- * gesture, and only the placeholder differs. Whether it renders at all is the
+ * Shared by every pick list because narrowing a list down is one gesture,
+ * and only the placeholder differs. Whether it renders at all is the
  * caller's call -- see FILTER_THRESHOLD in lib/filter.ts.
  */
 export function PickFilter({

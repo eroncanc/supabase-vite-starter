@@ -9,6 +9,7 @@ import { copy } from '@/lib/copy'
 export type ProjectInput = {
   name: string
   description: string | null
+  image_path: string | null
 }
 
 export async function listProjects(): Promise<Project[]> {
@@ -16,6 +17,17 @@ export async function listProjects(): Promise<Project[]> {
     .from('projects')
     .select('*')
     .order('created_at', { ascending: false })
+
+  if (error) throw error
+  return data
+}
+
+export async function getProject(id: string): Promise<Project> {
+  const { data, error } = await supabase
+    .from('projects')
+    .select('*')
+    .eq('id', id)
+    .single()
 
   if (error) throw error
   return data

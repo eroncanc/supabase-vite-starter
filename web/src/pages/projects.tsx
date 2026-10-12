@@ -2,6 +2,7 @@ import { Pencil, Plus, Trash2 } from 'lucide-react'
 import { useState } from 'react'
 
 import { ActionsMenuTrigger } from '@/components/actions-menu-trigger'
+import { CardLink } from '@/components/card-link'
 import { PageHeader } from '@/components/page-header'
 import { Placeholder } from '@/components/placeholder'
 import { ProjectFormDialog } from '@/components/project-form-dialog'
@@ -30,7 +31,10 @@ import {
   DropdownMenuItem,
 } from '@/components/ui/dropdown-menu'
 import { Skeleton } from '@/components/ui/skeleton'
+import { useHereBackLink } from '@/lib/back-link'
+import { CARD_SURFACE } from '@/lib/card-surface'
 import { copy } from '@/lib/copy'
+import { publicImageUrl } from '@/lib/images'
 import { useProjects } from '@/lib/use-projects'
 import type { Project } from '@/types/db'
 
@@ -41,6 +45,8 @@ const dateFormat = new Intl.DateTimeFormat(undefined, {
 export function ProjectsPage() {
   const { projects, loading, error, create, update, remove, reload } =
     useProjects()
+
+  const here = useHereBackLink() ?? undefined
 
   const [creating, setCreating] = useState(false)
   const [editing, setEditing] = useState<Project | null>(null)
@@ -108,15 +114,26 @@ export function ProjectsPage() {
       ) : (
         <div className="grid gap-4 sm:grid-cols-2">
           {projects.map((project) => (
-            <Card key={project.id}>
+            <Card key={project.id} className={CARD_SURFACE}>
+              {project.image_path ? (
+                <img
+                  src={publicImageUrl(project.image_path)}
+                  alt=""
+                  className="aspect-video w-full object-cover"
+                />
+              ) : null}
               <CardHeader>
-                <CardTitle>{project.name}</CardTitle>
+                <CardTitle>
+                  <CardLink to={`/projects/${project.id}`} backTo={here}>
+                    {project.name}
+                  </CardLink>
+                </CardTitle>
                 {project.description ? (
                   <CardDescription className="line-clamp-2">
                     {project.description}
                   </CardDescription>
                 ) : null}
-                <CardAction>
+                <CardAction className="relative z-10">
                   <DropdownMenu>
                     <ActionsMenuTrigger label={`Actions for ${project.name}`} />
                     <DropdownMenuContent align="end">

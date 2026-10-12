@@ -5,12 +5,48 @@ import { useCallback, useEffect, useState } from 'react'
 import {
   createProject,
   deleteProject,
+  getProject,
   listProjects,
   updateProject,
   type ProjectInput,
 } from '@/lib/projects'
 import type { Project } from '@/types/db'
 import { copy } from '@/lib/copy'
+
+/**
+ * One project, for its own page. The page remounts this per id (`key={id}`),
+ * so the initial state covers every load and the effect never has to reset it.
+ */
+export function useProject(id: string) {
+  const [project, setProject] = useState<Project | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    let ignore = false
+
+    getProject(id)
+      .then((row) => {
+        if (!ignore) setProject(row)
+      })
+      .catch((cause: unknown) => {
+        if (!ignore) {
+          setError(
+            cause instanceof Error ? cause.message : copy.errors.loadProject
+          )
+        }
+      })
+      .finally(() => {
+        if (!ignore) setLoading(false)
+      })
+
+    return () => {
+      ignore = true
+    }
+  }, [id])
+
+  return { project, loading, error }
+}
 
 export function useProjects() {
   const [projects, setProjects] = useState<Project[]>([])

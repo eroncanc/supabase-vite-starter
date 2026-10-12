@@ -1,27 +1,23 @@
 /**
- * Client-side filtering for the pick lists (the cast, a battle's side, a
- * moveset). A game holds tens of rows, not thousands, so every list is already
- * in memory and there is nothing to ask the server.
+ * Client-side filtering for pick lists. Built for lists of tens of rows, not
+ * thousands, already in memory -- there is nothing to ask the server. A list
+ * that outgrows that wants a server-side search instead.
  */
 
 /**
  * How long a list has to get before a filter box is worth showing above it.
  * Below this the whole list is on screen and a search field is just one more
  * thing between you and the tap you came to make.
- *
- * Five, because eight was tuned against the seeded dev game and a real one is
- * smaller: a party plus a couple of rivals never crossed it, so the filter
- * looked broken on a phone when it was only being polite.
  */
 export const FILTER_THRESHOLD = 5
 
 /**
  * Does a row match what was typed? Every whitespace-separated term has to
- * appear somewhere in the row's fields, so "pika thun" finds Pikachu's
- * Thunderbolt while the terms can be typed in either order.
+ * appear somewhere in the row's fields, so "ada love" and "love ada" both find
+ * Ada Lovelace.
  *
- * Case and accents are ignored -- "pokemon" should find "Pokémon", and nobody
- * reaches for the accent key mid-game.
+ * Case and accents are ignored -- "cafe" should find "Café", because nobody
+ * reaches for the accent key on a phone.
  */
 export function matchesFilter(
   query: string,

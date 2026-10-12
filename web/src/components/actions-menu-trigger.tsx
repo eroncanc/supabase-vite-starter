@@ -5,9 +5,8 @@ import { DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { cn } from '@/lib/utils'
 
 /**
- * The three-dot menu button, the same everywhere it turns up -- a game, a
- * character, a move, a type, an event, a log entry. It was nine copies of the
- * same four lines, which is how the tap target came to be 28px in all nine.
+ * The three-dot menu button, the same everywhere it turns up. Copies of these
+ * four lines are how a tap target ends up 28px everywhere at once.
  *
  * `touch-target` gives it a thumb's worth of hit area on a phone without
  * changing what's drawn, and `relative z-10` keeps it above `CardLink`'s
@@ -18,7 +17,7 @@ export function ActionsMenuTrigger({
   label,
   className,
 }: {
-  /** What the menu acts on, read out loud: "Actions for Pikachu". */
+  /** What the menu acts on, read out loud: "Actions for Groceries". */
   label: string
   className?: string
 }) {

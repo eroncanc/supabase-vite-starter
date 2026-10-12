@@ -4,6 +4,7 @@ import { AppLayout } from '@/components/app-layout'
 import { RequireAuth } from '@/components/require-auth'
 import { LoginPage } from '@/pages/login'
 import { NotFoundPage } from '@/pages/not-found'
+import { ProjectDetailPage } from '@/pages/project-detail'
 import { ProjectsPage } from '@/pages/projects'
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
       <Route element={<RequireAuth />}>
         <Route element={<AppLayout />}>
           <Route index element={<ProjectsPage />} />
+          <Route path="projects/:id" element={<ProjectDetailPage />} />
         </Route>
       </Route>
 

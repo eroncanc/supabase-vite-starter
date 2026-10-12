@@ -6,9 +6,9 @@ import { Button } from '@/components/ui/button'
 import type { BackLink } from '@/lib/back-link'
 
 /**
- * `back` renders above the title rather than at the foot of the page. A battle's
- * log grows all game, and a way out that sinks with it is a way out you have to
- * scroll to find. It sits here rather than in the layout because only the page
+ * `back` renders above the title rather than at the foot of the page. A page whose
+ * content keeps growing would push a way out at its foot below the fold, and a
+ * way out you have to scroll to find isn't one. It sits here rather than in the layout because only the page
  * knows where back goes -- see `lib/back-link.ts`.
  */
 export function PageHeader({

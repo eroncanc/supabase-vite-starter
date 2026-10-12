@@ -8,37 +8,37 @@ import { matchesFilter } from '@/lib/filter'
 
 describe('matchesFilter', () => {
   it('matches nothing typed against everything', () => {
-    expect(matchesFilter('', ['Pikachu'])).toBe(true)
-    expect(matchesFilter('   ', ['Pikachu'])).toBe(true)
+    expect(matchesFilter('', ['Lovelace'])).toBe(true)
+    expect(matchesFilter('   ', ['Lovelace'])).toBe(true)
   })
 
   it('matches a substring of any one field', () => {
-    expect(matchesFilter('kach', ['Pikachu', 'Electric'])).toBe(true)
-    expect(matchesFilter('lectr', ['Pikachu', 'Electric'])).toBe(true)
-    expect(matchesFilter('water', ['Pikachu', 'Electric'])).toBe(false)
+    expect(matchesFilter('vela', ['Lovelace', 'Mathematics'])).toBe(true)
+    expect(matchesFilter('themat', ['Lovelace', 'Mathematics'])).toBe(true)
+    expect(matchesFilter('physics', ['Lovelace', 'Mathematics'])).toBe(false)
   })
 
   it('ignores case and accents', () => {
-    expect(matchesFilter('POKEMON', ['Pokémon'])).toBe(true)
-    expect(matchesFilter('pokémon', ['Pokemon'])).toBe(true)
+    expect(matchesFilter('CAFE', ['Café'])).toBe(true)
+    expect(matchesFilter('café', ['Cafe'])).toBe(true)
   })
 
   it('requires every term, in any order', () => {
-    // "pika" is in the first row only and "fire" in the second, so an OR would
-    // match both rows here and an AND matches neither.
-    const pikachu = ['Pikachu', 'Electric']
-    const charizard = ['Charizard', 'Fire']
+    // "love" is in the first row only and "physics" in the second, so an OR
+    // would match both rows here and an AND matches neither.
+    const lovelace = ['Lovelace', 'Mathematics']
+    const curie = ['Curie', 'Physics']
 
-    expect(matchesFilter('pika fire', pikachu)).toBe(false)
-    expect(matchesFilter('pika fire', charizard)).toBe(false)
+    expect(matchesFilter('love physics', lovelace)).toBe(false)
+    expect(matchesFilter('love physics', curie)).toBe(false)
 
-    expect(matchesFilter('char fire', charizard)).toBe(true)
-    expect(matchesFilter('fire char', charizard)).toBe(true)
+    expect(matchesFilter('cur physics', curie)).toBe(true)
+    expect(matchesFilter('physics cur', curie)).toBe(true)
   })
 
   it('skips fields that aren’t there', () => {
-    // A wild combatant has no typing yet, and a move may deal none.
-    expect(matchesFilter('ratt', ['Rattata', null, undefined])).toBe(true)
-    expect(matchesFilter('normal', ['Rattata', null, undefined])).toBe(false)
+    // An optional column comes back null, or absent from a partial row.
+    expect(matchesFilter('turi', ['Turing', null, undefined])).toBe(true)
+    expect(matchesFilter('logic', ['Turing', null, undefined])).toBe(false)
   })
 })
