@@ -1,0 +1,32 @@
+name: Supabase Keep-Alive
+
+on:
+  schedule:
+    # Every 6 hours. Supabase's pausing docs ask for "a few user requests to
+    # the database each day over the previous week" — one ping every 3 days
+    # ran green and the project was paused anyway (Oct 2026). GitHub also
+    # starts scheduled runs hours late, so frequency is the safety margin.
+    # Minute 17 avoids the top-of-the-hour queue.
+    - cron: '17 */6 * * *'
+  workflow_dispatch: {}   # lets you trigger it manually from the Actions tab to test
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Read a real row from projects
+        # A dedicated secret key (revocable on its own) so the read gets past
+        # RLS and returns an actual game — the publishable key runs as anon,
+        # which no policy covers, so it only ever got back [].
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEEPALIVE_SECRET_KEY }}
+        run: |
+          body=$(curl -sS --fail \
+            "$SUPABASE_URL/rest/v1/projects?select=id&limit=1" \
+            -H "apikey: $SUPABASE_KEY")
+          rows=$(echo "$body" | jq 'length')
+          echo "Rows: $rows"
+          # An empty result means the key isn't bypassing RLS (wrong key, or
+          # the publishable one) — fail loudly rather than ping for nothing.
+          test "$rows" -gt 0

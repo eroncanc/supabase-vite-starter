@@ -1,0 +1,35 @@
+name: Vitest CI
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    # Sets the default directory for all terminal run commands to the 'web' folder
+    defaults:
+      run:
+        working-directory: ./web
+
+    steps:
+      # Step 1: Check out the repository source code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Node.js 22 and handle caching inside the 'web' directory
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "npm"
+          cache-dependency-path: "./web/package-lock.json" # Tells GitHub exactly where your lockfile is
+
+      # Step 3: Clean install dependencies inside ./web
+      - name: Install dependencies
+        run: npm ci
+
+      # Step 4: Run pure Vitest tests
+      - name: Run Vitest tests
+        run: npm run test

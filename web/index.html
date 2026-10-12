@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Starter</title>
+
+    <!-- Add <link rel="canonical"> and og:url once there's a production
+         origin. Absolute URLs: scrapers don't resolve relative ones. -->
+    <meta name="description" content="A Supabase + Vite starter." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Starter" />
+    <meta property="og:title" content="Starter" />
+    <meta property="og:description" content="A Supabase + Vite starter." />
+    <meta name="twitter:card" content="summary" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+    <script>
+      // Applies the stored theme before first paint so there's no light flash.
+      // Key must match THEME_STORAGE_KEY in src/lib/theme-context.ts.
+      try {
+        var stored = localStorage.getItem('starter:theme')
+        var dark =
+          stored === 'dark' ||
+          ((!stored || stored === 'system') &&
+            matchMedia('(prefers-color-scheme: dark)').matches)
+        document.documentElement.classList.toggle('dark', dark)
+        document.documentElement.style.colorScheme = dark ? 'dark' : 'light'
+      } catch (e) {
+        // Blocked storage -- fall back to the light default.
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
