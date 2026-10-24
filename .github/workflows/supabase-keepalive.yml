@@ -1,14 +1,14 @@
 name: Supabase Keep-Alive
 
-on:
-  schedule:
+#on:
+ # schedule:
     # Every 6 hours. Supabase's pausing docs ask for "a few user requests to
     # the database each day over the previous week" — one ping every 3 days
     # ran green and the project was paused anyway (Oct 2026). GitHub also
     # starts scheduled runs hours late, so frequency is the safety margin.
     # Minute 17 avoids the top-of-the-hour queue.
-    - cron: '17 */6 * * *'
-  workflow_dispatch: {}   # lets you trigger it manually from the Actions tab to test
+  #  - cron: '17 */6 * * *'
+ # workflow_dispatch: {}   # lets you trigger it manually from the Actions tab to test
 
 jobs:
   ping:
